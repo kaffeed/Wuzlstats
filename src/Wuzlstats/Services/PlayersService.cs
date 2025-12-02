@@ -29,25 +29,21 @@ namespace Wuzlstats.Services
         {
             var gamesQuery = FetchGames(leagueId, daysForStatistics);
 
-            // EF7 beta4 does not support navigation properties in queries yet
-            // this complicates the code a lot, because we need joins :(
+            // Load all games with their positions and players in one query
+            var games = await gamesQuery
+                .Include(g => g.Positions)
+                .ThenInclude(p => p.Player)
+                .ToListAsync();
 
             var players = new List<PlayerViewModel>();
 
-            foreach (var game in await gamesQuery.ToListAsync())
+            foreach (var game in games)
             {
-                var positions = await (from position in _db.PlayerPositions.AsNoTracking()
-                                       join player in _db.Players.AsNoTracking() on position.PlayerId equals player.Id
-                                       where position.GameId == game.Id
-                                       select new
-                                       {
-                                           position.Position,
-                                           Player = player
-                                       }).ToListAsync();
-                // player stats
-                foreach (var position in positions)
+                // Process in memory - all data already loaded
+                foreach (var position in game.Positions)
                 {
                     var playerEntity = position.Player;
+                    if (playerEntity == null) continue;
 
                     var player = players.FirstOrDefault(x => x.PlayerId == playerEntity.Id);
                     if (player == null)

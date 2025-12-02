@@ -16,13 +16,13 @@ namespace Wuzlstats.Controllers
     public class HomeController : Controller
     {
         private readonly Db _db;
-        private readonly IServiceProvider _services;
+        private readonly GamesViewModel _gamesViewModel;
 
 
-        public HomeController(Db db, IServiceProvider services)
+        public HomeController(Db db, GamesViewModel gamesViewModel)
         {
             _db = db;
-            _services = services;
+            _gamesViewModel = gamesViewModel;
         }
 
 
@@ -66,7 +66,7 @@ namespace Wuzlstats.Controllers
             }
 
             ViewBag.CurrentLeague = leagueEntity.Name;
-            return View(await _services.GetRequiredService<GamesViewModel>().Fill(leagueEntity));
+            return View(await _gamesViewModel.Fill(leagueEntity));
         }
 
 

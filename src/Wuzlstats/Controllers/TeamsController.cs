@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Wuzlstats.Models;
 using Wuzlstats.Services;
 using Wuzlstats.ViewModels.Teams;
@@ -13,17 +14,17 @@ namespace Wuzlstats.Controllers
         private readonly AppSettings _settings;
         private readonly TeamStatisticsService _statisticsService;
 
-        public TeamsController(Db db, AppSettings settings)
+        public TeamsController(Db db, AppSettings settings, TeamStatisticsService statisticsService)
         {
             _settings = settings;
             _db = db;
-            _statisticsService = new TeamStatisticsService(_db);
+            _statisticsService = statisticsService;
         }
 
         [Route("~/League/{league}/Teams")]
         public async Task<IActionResult> Index(string league, string sort, bool recent)
         {
-            var leagueEntity = _db.Leagues.FirstOrDefault(x => x.Name.ToLower() == league.ToLower());
+            var leagueEntity = await _db.Leagues.FirstOrDefaultAsync(x => x.Name.ToLower() == league.ToLower());
             if (leagueEntity == null)
             {
                 return RedirectToAction("Index", "Leagues");

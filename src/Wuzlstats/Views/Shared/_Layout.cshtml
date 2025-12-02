@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Wuzlstats@(ViewBag.CurrentLeague != null ? " - " + @ViewBag.CurrentLeague : "")</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/output.css"/>
     <link href="~/css/fontawesome.css" rel="stylesheet" />
     <link href="~/css/brands.css" rel="stylesheet" />
     <link href="~/css/solid.css" rel="stylesheet" />
@@ -29,45 +28,49 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-<body>
-<div class="container">
-    <header class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                    Wuzlstats
+<body class="bg-gray-50">
+<div class="min-h-screen flex flex-col">
+    <header class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center">
+                    <a asp-controller="Home" asp-action="Index" class="text-xl font-bold text-gray-800 hover:text-gray-600 transition-colors">
+                        Wuzlstats
 
-                    @if (ViewBag.CurrentLeague != null)
-                    {
-                        <span class="hidden-xs">
+                        @if (ViewBag.CurrentLeague != null)
+                        {
+                            <span class="hidden sm:inline ml-2 text-base font-normal text-gray-600">
                                 &#8669; @ViewBag.CurrentLeague league
                             </span>
-                    }
-                </a>
-            </div>
-
-            @if (ViewBag.CurrentLeague != null)
-            {
-                <div class="pull-right">
-                    <a asp-controller="Leagues" asp-action="Index" class="navbar-link">Switch league</a>
+                        }
+                    </a>
                 </div>
-            }
+
+                @if (ViewBag.CurrentLeague != null)
+                {
+                    <div>
+                        <a asp-controller="Leagues" asp-action="Index" class="text-blue-600 hover:text-blue-800 transition-colors">Switch league</a>
+                    </div>
+                }
+            </div>
         </div>
     </header>
 
-    @RenderBody()
+    <main class="flex-grow container mx-auto px-4 py-8">
+        @RenderBody()
+    </main>
 
-    <footer class="navbar navbar-default">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav">
+    <footer class="mt-auto bg-white border-t border-gray-200">
+        <div class="container mx-auto px-4">
+            <ul class="flex flex-col sm:flex-row sm:space-x-6 py-4 text-sm text-gray-600">
                 <li>
-                    Wuzlstats by <a href="https://twitter.com/saxx">Hannes 'saxx' Sachsenhofer</a> and others
+                    Wuzlstats by <a href="https://twitter.com/saxx" class="text-blue-600 hover:text-blue-800 transition-colors">Hannes 'saxx' Sachsenhofer</a> and others
                 </li>
                 <li>
-                    <a href="https://github.com/saxx/wuzlstats/issues">Report bug / request feature</a>
+                    <a href="https://github.com/saxx/wuzlstats/issues" class="text-blue-600 hover:text-blue-800 transition-colors">Report bug / request feature</a>
                 </li>
                 <li>
-                    <a href="https://github.com/saxx/wuzlstats">Fork on GitHub</a>
+                    <a href="https://github.com/saxx/wuzlstats" class="text-blue-600 hover:text-blue-800 transition-colors">Fork on GitHub</a>
                 </li>
             </ul>
         </div>
@@ -75,11 +78,8 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.4/hammer.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/app.bundle.js"> </script>
+<script src="~/js/app.bundle.js"></script>
 
 @RenderSection("scripts", required: false)
 @* ReSharper restore StatementIsNotTerminated *@

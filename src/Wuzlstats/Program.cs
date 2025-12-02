@@ -10,19 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<AppSettings>();
+builder.Services.AddScoped<Wuzlstats.Services.PlayersService>();
+builder.Services.AddScoped<Wuzlstats.Services.TeamStatisticsService>();
+builder.Services.AddTransient<Wuzlstats.ViewModels.Hubs.ReloadPlayersViewModel>();
+builder.Services.AddTransient<Wuzlstats.ViewModels.Home.GamesViewModel>();
+builder.Services.AddTransient<Wuzlstats.ViewModels.Hubs.LeagueStatisticsViewModel>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR(opts =>
 {
     opts.EnableDetailedErrors = true;
 }).AddNewtonsoftJsonProtocol();
-builder.Services.AddTransient<ReloadPlayersViewModel>();
-builder.Services.AddTransient<GamesViewModel>();
-builder.Services.AddTransient<LeagueStatisticsViewModel>();
 builder.Services.AddDbContext<Db>(opts =>
 {
-    var config = builder.Services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-
-    var connectionString = config.GetConnectionString("statsdb");
+    var connectionString = builder.Configuration.GetConnectionString("statsdb");
     if (connectionString != null && connectionString.Contains("%LOCALAPPDATA%"))
     {
         connectionString = connectionString.Replace("%LOCALAPPDATA%",

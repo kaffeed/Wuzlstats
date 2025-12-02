@@ -1,36 +1,42 @@
-﻿@model Wuzlstats.ViewModels.Home.DeleteGameViewModel
+@model Wuzlstats.ViewModels.Home.DeleteGameViewModel
 
 <form asp-action="DeleteGameConfirmed">
-    <div class="form">
-        <h2>Do you really want to delete the game?</h2>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <table class="table">
-                    <tr>
-                        <th>Date</th>
-                        <td class="text-right">@Model.PlayedOn</td>
-                    </tr>
-                    <tr>
-                        <th>Players</th>
-                        <td class="text-right">
-                            <span class="team-red">@Model.RedPlayers</span> :
-                            <span class="team-blue">@Model.BluePlayers</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Score</th>
-                        <td class="text-right">
-                            <span class="team-red">@Model.RedScore</span> :
-                            <span class="team-blue">@Model.BlueScore</span>
-                        </td>
-                    </tr>
-                </table>
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold mb-6">Do you really want to delete the game?</h2>
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full md:w-1/2 px-4 mb-6">
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <table class="min-w-full">
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-700 bg-gray-50">Date</th>
+                                <td class="px-6 py-4 text-right text-sm text-gray-900">@Model.PlayedOn</td>
+                            </tr>
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-700 bg-gray-50">Players</th>
+                                <td class="px-6 py-4 text-right text-sm">
+                                    <span class="team-red">@Model.RedPlayers</span> :
+                                    <span class="team-blue">@Model.BluePlayers</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-medium text-gray-700 bg-gray-50">Score</th>
+                                <td class="px-6 py-4 text-right text-sm">
+                                    <span class="team-red font-bold">@Model.RedScore</span> :
+                                    <span class="team-blue font-bold">@Model.BlueScore</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <p style="text-align: center;">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <a href="@Url.Action("Games")" class="btn btn-default">Back</a>
-                </p>
+            <div class="w-full md:w-1/2 px-4 mb-6">
+                <div class="flex items-center justify-center h-full">
+                    <div class="space-x-4">
+                        <button type="submit" class="px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">Delete</button>
+                        <a href="@Url.Action("Games")" class="inline-block px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors">Back</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom component classes */
+@layer components {
+  /* Team color utilities */
+  .team-blue {
+    @apply bg-team-blue px-1 py-0.5 rounded;
+  }
+
+  .team-red {
+    @apply bg-team-red px-1 py-0.5 rounded;
+  }
+
+  .form-control-team-blue {
+    @apply bg-team-blue;
+  }
+
+  .form-control-team-red {
+    @apply bg-team-red;
+  }
+
+  /* Score display */
+  .score {
+    @apply py-1.5 text-center w-[30px] font-bold sm:text-2xl sm:leading-8 sm:w-[55px];
+  }
+
+  .score:nth-of-type(1) {
+    @apply float-left;
+  }
+
+  .score:nth-of-type(2) {
+    @apply float-right;
+  }
+
+  .score-display {
+    @apply text-center font-bold;
+  }
+
+  /* Score box */
+  .score-box {
+    @apply bg-white rounded-lg shadow-md p-6;
+  }
+
+  .score-box .form-control.player:nth-of-type(2) {
+    @apply mt-2;
+  }
+
+  .score-box div:nth-child(2) {
+    @apply text-center p-0 leading-8 font-bold;
+  }
+
+  .score-box div:nth-child(2) span {
+    @apply sm:text-2xl;
+  }
+
+  .score-box.team-score-box div:nth-child(2) {
+    @apply pt-4;
+  }
+
+  /* Progress bars */
+  .progress-bar-animated {
+    @apply bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 bg-[length:200%_100%] animate-shimmer;
+  }
+
+  /* Ranking lists */
+  .ranking {
+    @apply list-none m-0 p-0;
+  }
+
+  .ranking li {
+    @apply m-0 p-0 h-[50px];
+  }
+
+  .ranking a {
+    @apply border-0;
+  }
+
+  .ranking a:nth-of-type(2) {
+    @apply float-right;
+  }
+
+  .ranking-image {
+    @apply w-10 h-10 rounded-full border-2 border-gray-500;
+  }
+
+  .ranking-name {
+    @apply font-bold relative -top-[38px] mx-[50px];
+  }
+
+  .ranking-name:nth-of-type(2) {
+    @apply -top-[58px] text-right;
+  }
+
+  .ranking-score {
+    @apply relative -top-10 mx-[50px] text-gray-500;
+  }
+
+  .ranking.team-ranking .ranking-score {
+    @apply text-center -top-[60px];
+  }
+
+  .ranking-wins {
+    @apply pr-2.5;
+  }
+
+  .ranking-wins .glyphicon {
+    @apply pl-1.5;
+  }
+
+  .ranking-losses .glyphicon {
+    @apply pl-1.5;
+  }
+
+  /* Player image */
+  .player-image {
+    @apply w-36 h-36 float-right rounded-full border-2 border-gray-500;
+  }
+}
+
+/* Custom base styles */
+@layer base {
+  body {
+    @apply pb-5 pt-5;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .row-spacing + .score-box {
+    @apply mt-6 sm:mt-12;
+  }
+
+  .score-box + .row-spacing {
+    @apply mt-6 sm:mt-12;
+  }
+}

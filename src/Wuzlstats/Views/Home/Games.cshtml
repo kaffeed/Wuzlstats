@@ -1,40 +1,55 @@
-﻿@model Wuzlstats.ViewModels.Home.GamesViewModel
+@model Wuzlstats.ViewModels.Home.GamesViewModel
 
-<p>
-    You may delete any game in this league. Please be careful and only delete erroneous games.
-    Since all the data is open and available to everyone, you can do a lot of harm. With great power comes great responsibility!
-</p>
+<div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+    <p class="text-blue-700">
+        You may delete any game in this league. Please be careful and only delete erroneous games.
+        Since all the data is open and available to everyone, you can do a lot of harm. With great power comes great responsibility!
+    </p>
+</div>
 
 @if (Model.Games.Any())
 {
-    <table class="table">
-        <tr>
-            <th>Date</th>
-            <th>Players</th>
-            <th>Score</th>
-            <th></th>
-        </tr>
-
-        @foreach (var game in Model.Games)
-        {
-            <tr>
-                <td>
-                    @game.Date UTC
-                </td>
-                <td>
-                    <span class="team-red">@game.RedPlayers</span> : <span class="team-blue">@game.BluePlayers</span>
-                </td>
-                <td>
-                    <span class="team-red">@game.RedScore</span> : <span class="team-blue">@game.BlueScore</span>
-                </td>
-                <td>
-                    <a href="@Url.Action("DeleteGame", "Home", new { league = Model.League, game = game.Id })" class="btn btn-danger btn-sm glyphicon glyphicon-remove"></a>
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Players</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @foreach (var game in Model.Games)
+                {
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            @game.Date UTC
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="team-red">@game.RedPlayers</span> : <span class="team-blue">@game.BluePlayers</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="team-red font-bold">@game.RedScore</span> : <span class="team-blue font-bold">@game.BlueScore</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                            <a href="@Url.Action("DeleteGame", "Home", new { league = Model.League, game = game.Id })" class="inline-flex items-center px-3 py-1.5 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
-    <div class="alert alert-warning">There are no games associated with this league. What a pity, you definitly should wuzl more.</div>
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+        <p class="text-yellow-700">
+            There are no games associated with this league. What a pity, you definitly should wuzl more.
+        </p>
+    </div>
 }

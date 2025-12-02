@@ -1,44 +1,52 @@
-﻿@model Wuzlstats.ViewModels.Leagues.IndexViewModel
+@model Wuzlstats.ViewModels.Leagues.IndexViewModel
 
-<h1>Choose a league</h1>
+<h1 class="text-3xl font-bold mb-4">Choose a league</h1>
 
-<p>
+<p class="text-gray-600 mb-6">
     Leagues are used to group players and games. Statistics are calculated for each league.
 </p>
 
 @if (Model.Leagues.Any())
 {
-    <table class="table">
-        <tr>
-            <th>League</th>
-            <th class="hidden-xs"># of games (all time)</th>
-            <th class="hidden-xs"># of games (@Model.DaysForStatistics days)</th>
-            <th class="text-right">
-                <a asp-action="Create" class="btn btn-default">Create a new league</a>
-            </th>
-        </tr>
-
-        @foreach (var league in Model.Leagues)
-        {
-            <tr>
-                <td>
-                    @league.Name
-                </td>
-                <td class="hidden-xs">
-                    @league.GamesCountTotal.ToString("N0")
-                </td>
-                <td class="hidden-xs">
-                    @league.GamesCountDays.ToString("N0")
-                </td>
-                <td class="text-right">
-                    <a href="@Url.Action("Index", "Home", new { league = league.Name })" class="btn btn-primary">Switch to this league</a>
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">League</th>
+                    <th class="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"># of games (all time)</th>
+                    <th class="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"># of games (@Model.DaysForStatistics days)</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <a asp-action="Create" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Create a new league</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @foreach (var league in Model.Leagues)
+                {
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            @league.Name
+                        </td>
+                        <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            @league.GamesCountTotal.ToString("N0")
+                        </td>
+                        <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            @league.GamesCountDays.ToString("N0")
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                            <a href="@Url.Action("Index", "Home", new { league = league.Name })" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Switch to this league</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
-    <div class="alert alert-warning">There are no leagues yet. You should <a asp-controller="Leagues" asp-action="Create" class="alert-link">create a new one</a>.
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+        <p class="text-yellow-700">
+            There are no leagues yet. You should <a asp-controller="Leagues" asp-action="Create" class="font-medium text-yellow-800 hover:text-yellow-900 underline">create a new one</a>.
+        </p>
     </div>
 }

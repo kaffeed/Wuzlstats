@@ -1,8 +1,10 @@
-﻿@model Wuzlstats.ViewModels.Teams.PlayerViewModel
+@model Wuzlstats.ViewModels.Teams.PlayerViewModel
 
-<div class="player">
+<div class="flex items-center">
     <a href="@Url.Action("Index", "Player", new { id = Model.Id })">
         <img src="data:image/png;base64,@Model.Image" alt="@Model.Name" class="ranking-image" />
     </a>
-    <div class="player-name">@Model.Name</div>
+    <div class="ml-2">
+        <div class="text-sm font-medium text-gray-900">@Model.Name</div>
+    </div>
 </div>
