@@ -82,5 +82,33 @@ async Task UpdateDatabase(IHost host)
 {
     await using var scope = host.Services.CreateAsyncScope();
     var ctx = scope.ServiceProvider.GetRequiredService<Db>();
-    await ctx.Database.MigrateAsync();
+
+    try
+    {
+        // Check if there are pending migrations
+        var pendingMigrations = await ctx.Database.GetPendingMigrationsAsync();
+        if (pendingMigrations.Any())
+        {
+            Console.WriteLine($"Applying {pendingMigrations.Count()} pending migrations...");
+            await ctx.Database.MigrateAsync();
+            Console.WriteLine("Migrations applied successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Database is up to date.");
+        }
+    }
+    catch (Exception ex)
+    {
+        // Log the error but don't crash the application
+        Console.WriteLine($"Migration error: {ex.Message}");
+        Console.WriteLine("Attempting to continue with existing database schema...");
+
+        // Verify we can at least connect
+        var canConnect = await ctx.Database.CanConnectAsync();
+        if (!canConnect)
+        {
+            throw new Exception("Cannot connect to database. Please check your connection string and ensure the database file is accessible.");
+        }
+    }
 }
