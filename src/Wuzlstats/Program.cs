@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
 using Wuzlstats;
 using Wuzlstats.Hubs;
 using Wuzlstats.Models;
@@ -12,7 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<AppSettings>();
 builder.Services.AddScoped<LeagueHelper>();
+
+
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddSignalR(opts =>
 {
     opts.EnableDetailedErrors = true;
@@ -54,6 +58,10 @@ builder.Services.AddWebOptimizer(pipeline =>
 
 var app = builder.Build();
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions {
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -62,7 +70,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// uncomment if needed, handled by nginx
+/*if (app.Environment.IsDevelopment())*/
+/*{*/
+/*    app.UseHttpsRedirection();*/
+/*}*/
 app.UseWebOptimizer();
 app.UseStaticFiles();
 
